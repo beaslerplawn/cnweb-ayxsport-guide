@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>澳客 · 信息查询与延伸阅读</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f9fafb;
+            color: #1e293b;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.7;
+            padding: 2rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page {
+            max-width: 640px;
+            width: 100%;
+        }
+
+        /* 顶部导航 — 极简 */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0 1.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2.5rem;
+        }
+        .top-nav .logo {
+            font-weight: 600;
+            font-size: 1.15rem;
+            letter-spacing: 0.01em;
+            color: #0f172a;
+        }
+        .top-nav .logo a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .top-nav .logo a:hover {
+            opacity: 0.7;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            transition: color 0.15s;
+        }
+        .nav-links a:hover {
+            color: #0f172a;
+        }
+
+        /* 主要区块 */
+        h1, h2, h3 {
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            color: #0f172a;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        h3 {
+            font-size: 1.15rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 480;
+            color: #1e293b;
+        }
+        p {
+            margin-bottom: 1.2rem;
+            color: #334155;
+        }
+        .hero {
+            margin-bottom: 1.5rem;
+        }
+        .hero .subhead {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid #cbd5e1;
+            padding-left: 1rem;
+        }
+
+        /* 场景卡片 */
+        .scene-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            margin: 1.5rem 0 2rem 0;
+        }
+        .scene-card {
+            background-color: #ffffff;
+            border: 1px solid #e9edf2;
+            border-radius: 16px;
+            padding: 1.5rem 1.8rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: box-shadow 0.2s;
+        }
+        .scene-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .scene-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .scene-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+        .scene-card .meta {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.6rem;
+            border-top: 1px dashed #e2e8f0;
+            padding-top: 0.6rem;
+        }
+
+        /* 常见说明 (FAQ 摘要) */
+        .faq-block {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 1.5rem 1.8rem;
+            margin: 2.5rem 0 2rem 0;
+            border: 1px solid #e9edf2;
+        }
+        .faq-block details {
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 0.6rem;
+        }
+        .faq-block details:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .faq-block summary {
+            font-weight: 470;
+            cursor: pointer;
+            color: #1e293b;
+            padding: 0.3rem 0;
+        }
+        .faq-block summary:hover {
+            color: #0f172a;
+        }
+        .faq-block .answer {
+            font-size: 0.92rem;
+            color: #475569;
+            margin-top: 0.4rem;
+            padding-left: 0.2rem;
+        }
+
+        /* 页脚 */
+        .footer {
+            margin-top: 3.5rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        .footer a {
+            color: #334155;
+            text-decoration: none;
+            border-bottom: 1px dotted #cbd5e1;
+        }
+        .footer a:hover {
+            border-bottom: 1px solid #334155;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .top-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+                padding-bottom: 1rem;
+                margin-bottom: 1.8rem;
+            }
+            .nav-links {
+                gap: 1.5rem;
+            }
+            .scene-card {
+                padding: 1.2rem 1.2rem;
+            }
+            .faq-block {
+                padding: 1.2rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <div class="logo">
+            <a href="https://site-okooo.com">澳客</a>
+        </div>
+        <div class="nav-links">
+            <a href="#scene">场景</a>
+            <a href="#faq">说明</a>
+        </div>
+    </nav>
+
+    <!-- hero 区 — 从日常查询、对照与延伸阅读展开 -->
+    <div class="hero">
+        <h1>日常查询与对照</h1>
+        <div class="subhead">
+            信息的价值往往藏在对照与延伸之间。一个安静的起点，比喧闹的入口更有用。
+        </div>
+        <p>
+            在网络上检索与分析，很多时候只是需要一个可靠的地方，把零散的数据或消息并排摊开，然后慢慢看。不必刻意强调功能，也不必频繁跳转——有时少一些操作，反而更容易看清楚脉络。
+        </p>
+        <p>
+            我一直用 <a href="https://site-okooo.com">澳客</a> 做这类事情。它不制造紧张感，也不催促你做选择，更像一个安静的参考系：你想查什么，把它放在页面上，自己对照就好。数据本身是朴素的，而对照产生的那一点延伸，往往才是真正属于你的发现。
+        </p>
+    </div>
+
+    <!-- 三个场景模块 (轻量卡片) -->
+    <h2 id="scene">三个日常场景</h2>
+    <div class="scene-grid">
+
+        <div class="scene-card">
+            <h3>① 随手核对一组数字</h3>
+            <p>晚上开奖后，拿出手机或纸条，把号码一条条列出来。不需要二次跳转，直接看列表里的标注与高亮。错位、重复、连续——几秒内就能完成核对。</p>
+            <p>我通常会把历史期数也展开，顺便看看近十期的分布。这种“顺便”往往能带来一些模糊的感觉，不算结论，却让下一次查询更有方向。</p>
+            <div class="meta">常用动作：列表对照 · 历史折叠</div>
+        </div>
+
+        <div class="scene-card">
+            <h3>② 静态对照与记录</h3>
+            <p>做自己的小表格时，需要把某几期的数据放在同一屏里看。不需要动图或者闪烁提示，只要整齐、可读、能同时看到多组数据就够了。</p>
+            <p>用 <a href="https://site-okooo.com">澳客</a> 打开静态页面，调整窗口大小，左右分屏。数据不会突然变化，也不会弹出干扰层，很适合专注地做笔记。</p>
+            <div class="meta">常用动作：分屏比对 · 截图标注</div>
+        </div>
+
+        <div class="scene-card">
+            <h3>③ 延伸阅读与趋势感知</h3>
+            <p>偶尔会翻一翻过去几周的统计摘要，不是为了预测，而是想了解某种模式是否稳定。比如某些区段的冷热分布，或者间隔周期的大致轮廓。</p>
+            <p>这种延伸阅读不需要很深入，但需要数据本身干净，且能按自己的节奏滑动页面。不推荐、不引导，只看事实陈列。</p>
+            <div class="meta">常用动作：滚动浏览 · 周期对比</div>
+        </div>
+
+    </div>
+
+    <!-- 常见说明 (FAQ 摘要) -->
+    <h2 id="faq">几段常见说明</h2>
+    <div class="faq-block">
+        <details>
+            <summary>页面上的数据更新频率如何？</summary>
+            <div class="answer">通常基于公开结果同步更新，具体时效以各数据源为准。日常查询建议以官方发布为最终依据，这里更适合作为对照参考。</div>
+        </details>
+        <details>
+            <summary>是否需要注册或登录？</summary>
+            <div class="answer">不需要。直接打开页面即可浏览与对照，没有会员墙或隐藏模块。查询本身就是最直接的操作。</div>
+        </details>
+        <details>
+            <summary>移动端查看体验怎么样？</summary>
+            <div class="answer">页面针对窄屏做了一定的自适应，字号和间距都保留了可读性。个人感受：在手机上做快速核对够用，但分屏比对时用平板或电脑会更从容。</div>
+        </details>
+        <details>
+            <summary>为什么强调“延伸阅读”而不是“分析工具”？</summary>
+            <div class="answer">因为大多数时候我们需要的只是一个不打扰的参照面，而不是一个替我们做判断的系统。看得清楚，比看得花哨重要得多。</div>
+        </details>
+    </div>
+
+    <!-- 结尾与页脚 -->
+    <div class="footer">
+        <span>只安静陈列，不制造噪音</span>
+        <span><a href="https://site-okooo.com">澳客</a> · 日常对照</span>
+    </div>
+
+</div>
+</body>
+</html>
